@@ -29,33 +29,32 @@ To formulate a C program to convert a decimal number into its binary equivalent 
    Stop
 # Program:
 ```
-#include <stdio.h>
+    int n, binary[32], i = 0;
 
-int main() {
-    int num, rem, binary[32], i = 0, k;
+    scanf("%d", &n);
 
-    printf("Enter a decimal number: ");
-    scanf("%d", &num);
-
-    int temp = num;  
-    while (num > 0) {
-        rem = num % 2;
-        binary[i] = rem;
-        i++;
-        num = num / 2;
+    if (n == 0) {
+        printf("Binary: 0");
+        return 0;
     }
 
-    printf("Binary equivalent of %d is: ", temp);
-    for (k = i - 1; k >= 0; k--) {
-        printf("%d", binary[k]);
+    while (n > 0) {
+        binary[i++] = n % 2;
+        n = n / 2;
     }
 
-    printf("\n");
+    printf("Binary: ");
+    for (int j = i - 1; j >= 0; j--) {
+        printf("%d", binary[j]);
+    }
+
     return 0;
 }
 ```
 # Output:
-<img width="557" height="261" alt="517212012-b1e46493-808b-49da-8e1a-5fbb890bc281" src="https://github.com/user-attachments/assets/e9e65ac7-aa40-450c-89e8-01fbc74217b9" />
+
+<img width="1214" height="682" alt="image" src="https://github.com/user-attachments/assets/91602cd1-b23b-4014-8784-87b494e28217" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -95,84 +94,52 @@ Thus, the program was implemented and executed successfully, and the required ou
   Stop
 # Program:
 ```
+#include <stdio.h>
 
 int main() {
-    int i, j, k, m;
-    int pos[2][2];
-    int min, max;
-    
-    printf("Enter the order of the square matrix: ");
-    scanf("%d", &m);
+    int a[10][10], r, c, i, j;
 
-    int a[m][m];
+    scanf("%d %d", &r, &c);
 
-    // Read matrix elements
-    printf("Enter the elements of the matrix:\n");
-    for (i = 0; i < m; i++) {
-        for (j = 0; j < m; j++) {
+    for (i = 0; i < r; i++)
+        for (j = 0; j < c; j++)
             scanf("%d", &a[i][j]);
-        }
-    }
-
-    // Display matrix
-    printf("\nMatrix:\n");
-    for (i = 0; i < m; i++) {
-        for (j = 0; j < m; j++) {
-            printf("%d ", a[i][j]);
-        }
-        printf("\n");
-    }
 
     int found = 0;
 
-    // Find saddle point
-    for (i = 0; i < m; i++) {
+    for (i = 0; i < r; i++) {
+        int min = a[i][0], col = 0;
 
-        min = a[i][0];
-        pos[0][0] = i;
-        pos[0][1] = 0;
-
-        // Minimum in the row
-        for (j = 1; j < m; j++) {
+        for (j = 1; j < c; j++) {
             if (a[i][j] < min) {
                 min = a[i][j];
-                pos[0][0] = i;
-                pos[0][1] = j;
+                col = j;
             }
         }
 
-        // Maximum in the column
-        j = pos[0][1];
-        max = a[0][j];
-        pos[1][0] = 0;
-        pos[1][1] = j;
-
-        for (k = 1; k < m; k++) {
-            if (a[k][j] > max) {
-                max = a[k][j];
-                pos[1][0] = k;
-                pos[1][1] = j;
+        int isSaddle = 1;
+        for (int k = 0; k < r; k++) {
+            if (a[k][col] > min) {
+                isSaddle = 0;
+                break;
             }
         }
 
-        // Check for saddle point
-        if (min == max && pos[0][0] == pos[1][0] && pos[0][1] == pos[1][1]) {
-            printf("\nSaddle point found: %d at position (%d, %d)\n",
-                   min, pos[0][0], pos[0][1]);
+        if (isSaddle) {
+            printf("Saddle Point: %d\n", min);
+            printf("Position: (%d, %d)\n", i, col);
             found = 1;
-            break;
         }
     }
 
-    if (!found) {
-        printf("\nNo saddle point exists in the matrix.\n");
-    }
+    if (!found)
+        printf("No Saddle Point");
 
     return 0;
 }
 ```
 # Output:
-<img width="611" height="433" alt="517213090-4f29c695-4ac5-4247-8804-515482eccb44" src="https://github.com/user-attachments/assets/7dd1b659-3818-4b7f-a095-dc712d685a59" />
+<img width="1197" height="611" alt="image" src="https://github.com/user-attachments/assets/91c06268-4b21-44ec-8df4-d97d2d9f5f7a" />
 
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
@@ -209,31 +176,26 @@ Thus, the program was implemented and executed successfully, and the required ou
 # Program:
 ```
 #include <stdio.h>
+#include <string.h>
 
 int main() {
-    char s[100], d[100];
-    int i, j, len = 0;
+    char str[100];
+    int i, len;
 
-    printf("Enter a string: ");
-    scanf("%[^\n]s", s);
+    scanf("%s", str);
 
-    while (s[len] != '\0') {
-        len++;
-    }
+    len = strlen(str);
 
-    j = 0;
     for (i = len - 1; i >= 0; i--) {
-        d[j] = s[i];
-        j++;
+        printf("%c", str[i]);
     }
-    d[j] = '\0';  
-    printf("Reversed string: %s", d);
 
     return 0;
 }
 ```
 # Output:
-<img width="570" height="243" alt="517217011-24dd5067-377e-4aca-a204-14e200045240" src="https://github.com/user-attachments/assets/cb5f7cff-3899-4818-97c1-1f60f87a1e74" />
+<img width="1188" height="474" alt="image" src="https://github.com/user-attachments/assets/db272334-e054-48a8-a02a-8d80a3c4bcda" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -272,29 +234,18 @@ Thus, the program was implemented and executed successfully, and the required ou
 #include <string.h>
 
 int main() {
-    char s[100];
-    int visited[256] = {0};
-    int i, j, n, count;
+    char str[100];
+    int freq[256] = {0};
 
-    printf("Enter a string: ");
-    scanf("%[^\n]", s);
+    scanf("%s", str);
 
-    n = strlen(s);
+    for (int i = 0; str[i] != '\0'; i++) {
+        freq[(int)str[i]]++;
+    }
 
-    printf("\nCharacter Frequency:\n");
-
-    for (i = 0; i < n; i++) {
-        if (visited[(unsigned char)s[i]] == 0) {
-            count = 0;
-
-            for (j = 0; j < n; j++) {
-                if (s[i] == s[j]) {
-                    count++;
-                }
-            }
-
-            printf("%c : %d\n", s[i], count);
-            visited[(unsigned char)s[i]] = 1;
+    for (int i = 0; i < 256; i++) {
+        if (freq[i] != 0) {
+            printf("%c : %d\n", i, freq[i]);
         }
     }
 
@@ -302,7 +253,8 @@ int main() {
 }
 ```
 # Output:
-<img width="552" height="472" alt="517217789-d68f8423-fc88-43dc-b85b-46b641d4cd01" src="https://github.com/user-attachments/assets/6cc8b9d1-073f-4844-a227-f9da0d8ebe3d" />
+<img width="1426" height="657" alt="image" src="https://github.com/user-attachments/assets/03ca8fdd-ee08-4b64-bd67-d7d26cfc4c88" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -339,49 +291,33 @@ Thus, the program was implemented and executed successfully, and the required ou
 ```
 #include <stdio.h>
 #include <string.h>
-
 int main() {
     char str[200], words[50][50];
-    int i, j, k = 0, row = 0;
-
-    printf("Enter a string: ");
-    scanf("%[^\n]s", str);
-
-    for (i = 0; str[i] != '\0'; i++) {
-        if (str[i] != ' ') {
-            words[row][k++] = str[i];
-        } else {
-            words[row][k] = '\0';
-            row++;
-            k = 0;
-        }
-    }
-    words[row][k] = '\0'; 
-    row++;
-
-    for (i = 0; i < row; i++) {
-        if (words[i][0] == '\0')
-            continue;
-
-        for (j = i + 1; j < row; j++) {
-            if (strcmp(words[i], words[j]) == 0) {
-                words[j][0] = '\0'; 
+    int count = 0;
+    fgets(str, sizeof(str), stdin);
+    char *token = strtok(str, " \n");
+    while (token != NULL) {
+        int found = 0;
+        for (int i = 0; i < count; i++) {
+            if (strcmp(words[i], token) == 0) {
+                found = 1;
+                break;
             }
         }
-    }
-
-    printf("\nString after removing duplicate words:\n");
-    for (i = 0; i < row; i++) {
-        if (words[i][0] != '\0') {
-            printf("%s ", words[i]);
+        if (!found) {
+            strcpy(words[count], token);
+            count++;
         }
+        token = strtok(NULL, " \n");
     }
-
+    for (int i = 0; i < count; i++) {
+        printf("%s ", words[i]);
+    }
     return 0;
 }
 ```
 # Output:
-<img width="732" height="242" alt="517220099-1e0c46b7-4a78-49d1-ba45-8d8ab7ef2c47" src="https://github.com/user-attachments/assets/6924f270-3ffe-4ad2-8b2a-77b9bfa28a78" />
+<img width="1551" height="766" alt="image" src="https://github.com/user-attachments/assets/a662d136-cb66-40be-baee-e9424def553f" />
 
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
